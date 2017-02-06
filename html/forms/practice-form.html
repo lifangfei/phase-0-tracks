@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forms</title>
+</head>
+<body>
+<h1>Survey about colors</h1>
+<form name="favorite color" action="success.html" method="post">
+  <fieldset>
+    <div>
+      <label>What is your name?</label>
+      <input type="text" name="name">
+    </div>
+
+    <div>
+      <label>What is your age?</label>
+      <input type="number" name="age">
+    </div>
+
+    <div>
+      <label>Favorite primary color:</label>
+      <select name="color">
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="yellow">Yellow</option>
+      </select>
+    </div>
+
+    <div>
+    	<label>Why is that your favorite color?</label><br>
+    	<textarea name="rationale"
+   		rows="5" cols="50">Insert response here</textarea>
+   	</div>
+
+    <div>
+    	<label>Why is that your second favorite color?</label><br>
+		<input type="radio" name="secondarycolor" value="purple" checked>Purple<br>
+		<input type="radio" name="secondarycolor" value="orange">Orange<br>   
+      	<input type="radio" name="secondarycolor" value="green">Green
+    </div>
+
+    <div>
+     <input type="checkbox" name="truth" value="agree">
+     Are you truthful in all your responses?
+    </div>
+  </fieldset>
+  
+  <button type="submit">Submit answers</button>
+</form>
+</body>
+</html>
