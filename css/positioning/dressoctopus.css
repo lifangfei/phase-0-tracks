@@ -1,0 +1,18 @@
+.octopus {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#glasses {
+	position: absolute;
+	top: 34%;
+	left: 19%;
+}
+
+#hat {
+	position: absolute;
+	top: -20%;
+	left: -13%;
+}
