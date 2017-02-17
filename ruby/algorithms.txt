@@ -1,0 +1,27 @@
+#How to use an elevator:
+
+Enter elevator by walking forward after elevator doors open
+If on the ground floor:
+	If going home:
+		Press 2 because I live on the second floor
+	If visiting best friend:
+		Press 7 because he lives on the seventh floor
+Else if on floor 2 or 7
+	Press G to get to the ground floor
+Exit elevator by walking backward after elevator doors open
+
+#Curling hair:
+
+Start from the front of your head in front of your face
+	Brush all hair
+	Part hair by creating a line separating left and right that is in-line with right eye
+	Create two sections of hair
+For left section of hair
+	Wrap 1 inch sections of hair counterclockwise on the curling wand starting from the back of the head
+	Hold for 10 seconds
+	Continue until left section is done
+For right section of hair
+	Wrap 1 inch sections of hair clockwise on the curling wand starting from the back of the head
+	Hold for 10 seconds
+	Continue until right section is done
+Spray with hairspray
