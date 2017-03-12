@@ -4,18 +4,20 @@
 # We spent [#] hours on this challenge.
 
 # EXPLANATION OF require_relative
-#
-#
+# Require relative makes code from another file accessible in this file without having to copy it over
+# Require makes code from another file (potentially not written by the original user) accessible in current file without copying
 require_relative 'state_data'
 
 class VirusPredictor
 
+# Creating instance variables
   def initialize(state_of_origin, population_density, population)
     @state = state_of_origin
     @population = population
     @population_density = population_density
   end
 
+# Printing predicted deaths and speed of spread as the effects of the virus
   def virus_effects
     predicted_deaths(@population_density, @population, @state)
     speed_of_spread(@population_density, @state)
@@ -23,6 +25,7 @@ class VirusPredictor
 
   private
 
+# For denser areas, there is a proportionally changed amount of deaths due to both population and density
   def predicted_deaths(population_density, population, state)
     # predicted deaths is solely based on population density
     if @population_density >= 200
@@ -41,6 +44,7 @@ class VirusPredictor
 
   end
 
+# Defines speed of spread as inversely proportional to the population density
   def speed_of_spread(population_density, state) #in months
     # We are still perfecting our formula here. The speed is also affected
     # by additional factors we haven't added into this functionality.
