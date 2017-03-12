@@ -9,6 +9,7 @@
 require_relative 'state_data'
 
 class VirusPredictor
+attr_reader :population_density, :population, :state
 
 # Creating instance variables
   def initialize(state_of_origin, population_density, population)
@@ -19,14 +20,15 @@ class VirusPredictor
 
 # Printing predicted deaths and speed of spread as the effects of the virus
   def virus_effects
-    predicted_deaths(@population_density, @population, @state)
-    speed_of_spread(@population_density, @state)
+    predicted_deaths#(@population_density, @population, @state)
+    speed_of_spread#(@population_density, @state)
   end
 
   private
 
 # For denser areas, there is a proportionally changed amount of deaths due to both population and density
-  def predicted_deaths(population_density, population, state)
+=begin
+  def predicted_deaths#(population_density, population, state)
     # predicted deaths is solely based on population density
     if @population_density >= 200
       number_of_deaths = (@population * 0.4).floor
@@ -43,9 +45,27 @@ class VirusPredictor
     print "#{@state} will lose #{number_of_deaths} people in this outbreak"
 
   end
+=end 
+def predicted_deaths#(population_density, population, state)
+    # predicted deaths is solely based on population density
+    if population_density >= 200
+      multiplier = 0.4
+    elsif population_density >= 150
+      multiplier = 0.3
+    elsif population_density >= 100
+      multiplier = 0.2
+    elsif population_density >= 50
+      multiplier = 0.1
+    else
+      multiplier = 0.05
+    end
+    number_of_deaths = (population * multiplier).floor
+    print "#{state} will lose #{number_of_deaths} people in this outbreak"
+
+  end
 
 # Defines speed of spread as inversely proportional to the population density
-  def speed_of_spread(population_density, state) #in months
+  def speed_of_spread#(population_density, state) #in months
     # We are still perfecting our formula here. The speed is also affected
     # by additional factors we haven't added into this functionality.
     speed = 0.0
@@ -72,8 +92,13 @@ end
 
 # DRIVER CODE
  # initialize VirusPredictor for each state
+STATE_DATA.each do |state, state_data|
+  states = VirusPredictor.new(state, state_data[:population_density], state_data[:population])
+  states.virus_effects
+  #p state
+end
 
-
+=begin
 alabama = VirusPredictor.new("Alabama", STATE_DATA["Alabama"][:population_density], STATE_DATA["Alabama"][:population])
 alabama.virus_effects
 
@@ -82,6 +107,7 @@ jersey.virus_effects
 
 california = VirusPredictor.new("California", STATE_DATA["California"][:population_density], STATE_DATA["California"][:population])
 california.virus_effects
+=end
 
 alaska = VirusPredictor.new("Alaska", STATE_DATA["Alaska"][:population_density], STATE_DATA["Alaska"][:population])
 alaska.virus_effects
