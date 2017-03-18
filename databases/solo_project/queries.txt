@@ -1,0 +1,29 @@
+Display the information in one table (either table is fine).
+SELECT * FROM sfmichelin;
+
+Update an item that meets some condition (you can choose a condition that makes sense).
+UPDATE sfmichelin SET price = 303 WHERE restaurant = "Manresa"
+
+Display the information in both tables using one query.
+SELECT * FROM sfmichelin, locations WHERE sfmichelin.location = locations.id;
+
+Display a narrower selection of columns (fewer columns than all of them, in other words) from both tables using one query.
+SELECT sfmichelin.restaurant, locations.location FROM sfmichelin JOIN locations ON sfmichelin.location = locations.id;
+
+Delete an item that meets some condition (you can choose a condition that makes sense).
+DELETE FROM sfmichelin WHERE previous = "false"
+
+RESEARCH ON YOUR OWN
+CROSS JOIN:
+sqlite> SELECT EMP_ID, NAME, DEPT FROM COMPANY CROSS JOIN DEPARTMENT;
+SELECT restaurant from sfmichelin CROSS JOIN locations;
+
+INNER JOIN:
+sqlite> SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+      ON COMPANY.ID = DEPARTMENT.EMP_ID;
+SELECT restaurant, price, stars FROM sfmichelin INNER JOIN locations on sfmichelin.location = locations.id;
+
+OUTER JOIN: 
+sqlite> SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+      ON COMPANY.ID = DEPARTMENT.EMP_ID;
+Not supported right or outer
