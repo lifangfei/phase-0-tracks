@@ -9,6 +9,7 @@
 # Add, delete, search, display database
 
 require 'sqlite3'
+# COULD NOT GET THIS TO WORK (GOOGLE QPX API)
 #require ('qpx-client')
 #qpxClient = new QPXClient(options);
 #  options = {
@@ -18,7 +19,7 @@ require 'sqlite3'
 
 # SQLite3 Database
 db = SQLite3::Database.new("flights.db")
-db.results_as_hash=true
+db.results_as_hash = true
 
 # Set up tables for route and flight data
 create_route_table = <<-SQL
@@ -52,66 +53,74 @@ end
 def add_to_flights(db, d_location, a_location, d_datetime, a_datetime, price, route_id)
 	db.execute("INSERT INTO flights(d_location, a_location, d_datetime, a_datetime, price, route_id) VALUES (?,?,?,?,?,?)",[d_location, a_location, d_datetime, a_datetime, price, route_id])
 end
-#Test for adding to routes and flights
+# Test for adding to routes and flights
 p add_to_routes(db,"Directly from California to Austin", "true")
 p add_to_flights(db,"SFO","AUS","2017-05-30 19:00:00.0000","2017-05-31 00:29:00.0000",184,1)
 
-=begin
+# View routes
+def view(db,route)
+	db.execute("SELECT route_options.id, flights.d_location, flights.a_location, flights.d_datetime, flights.a_datetime, flights.price FROM flights JOIN route_options ON flights.route_id = route_options.id")
+end
+# Test for viewing routes
+p view(db,1)
 
-# display all manga
-def display(db)
-	display_all_manga = <<-SQL
-		SELECT m.title, m.author, m.volume, m.complete, p.publisher from manga as m, publisher as p where m.publisher_id = p.id
-	SQL
+# Update the routes
+# Not too sure how to update multiple things at once, can only assume to use a if/else statement D:
+def update_routes_description(db, description, id)
+	db.execute("UPDATE route_options SET description = ? WHERE id = ?", [description, id])
+end
+def update_routes_preference(db, preference, id)
+	db.execute("UPDATE route_options SET preference = ? WHERE id = ?", [preference, id])
+end
+# Test for updating routes
+#p update_routes_description(db, "lalala", 1)
 
-	db.execute(display_all_manga)
+# Delete the routes
+def delete_routes(db, id)
+	db.execute("DELETE FROM route_options WHERE id = ?", [id])
+end
+# Test for deleting routes
+#p delete_routes(db, 1)
+
+# DRIVER CODE
+puts "What would you like to do? (Add route, add flight, view routes, update routes, delete routes, 'q' to quit)"
+answer = gets.chomp
+
+	
+puts "Write a description"
+description = gets.chomp
+correct = false
+while correct == false
+	puts "Is this your preferred route? (true or false)"
+	preference = gets.chomp
+	if preference == "true"
+		correct = true
+		preference = true
+	elsif preference == "false"
+		preference = false
+		correct = true
+	end
 end
 
-def add_to_library(db, title, author, volume, complete, publisher_id)
-	add_library = <<-SQL
-		INSERT INTO manga (title, author, volume, complete, publisher_id) VALUES (?, ?, ?, ?, ?)
-	SQL
+puts "Starting airport, ending airport, date/time departure, date/time arrival, price, route number in this format (SFO,AUS,YYYY-MM-DD HH:MM:SS.SSSS,YYYY-MM-DD HH:MM:SS.SSSS,#####,#)"
+flight_array=gets.chomp.split(',')
+flight_array[5]=flight_array[5].to_i
+flight_array[6]=flight_array[6].to_i
 
-	db.execute(add_to_library)
+puts "What route would you like to view?"
+view_route=gets.chomp.to_i
+
+puts "What is your new description?"
+update_description = gets.chomp
+
+pass = false
+while pass == false
+	puts "What is the new preference? (true or false)"
+	preference = gets.chomp
+	if preference == "true" || preference == "false"
+		pass = true
+	end
 end
 
-def search(db,title)
-	search_manga = <<-SQL
-		SELECT title, author, volume FROM manga WHERE title = (?)
-	SQL
-
-	db.execute(search_manga)
-end
-
-def edit_library(db, title)
-	edit = <<-SQL 
-		UPDATE manga (title, author, volume, complete, publisher_id) set title = (?)
-	SQL
-
-	db.execute(edit_library)
-end
-
-def delete_from_library(db, title)
-	library_delete = <<-SQL
-		DELETE from manga where title = (?)
-	SQL
-
-	db.execute(delete_from_library)
-end
-
-#DRIVER CODE
-p display(db)
-p add_to_library(db,"Demon Diary", "Kara", 1, "true", 3)
-p search(db,"Demon Diary")
-p edit_library 
-p delete_from_library(db, "Demon Diary")
-
-#add test company
-# db.execute("INSERT INTO publisher (publisher) VALUES ('Viz')")
-# db.execute("INSERT INTO publisher (publisher) VALUES ('Yen Press')")
-# db.execute("INSERT INTO publisher (publisher) VALUES ('Tokyopop')")
-# db.execute("INSERT INTO publisher (publisher) VALUES ('Dark Horse Manga')")
-
-#add test manga
-# db.execute("INSERT INTO manga (title, author, volume, complete, publisher_id) VALUES ('Demon Diary', 'Kara', 1, 'true', 3)")
-=end
+puts "What route would you like to delete?"
+delete_route=gets.chomp.to_i		
