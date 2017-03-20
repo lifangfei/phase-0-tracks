@@ -16,11 +16,13 @@ require 'sqlite3'
 #        timeout: 15000
 #    }
 
-#=begin
+# SQLite3 Database
 db = SQLite3::Database.new("flights.db")
+db.results_as_hash=true
 
+# Set up tables for route and flight data
 create_route_table = <<-SQL
-CREATE TABLE IF NOT EXISTS manga(
+CREATE TABLE IF NOT EXISTS route_options(
 		id INTEGER PRIMARY KEY,
 		description VARCHAR(255),
 		preference BOOLEAN
@@ -31,34 +33,30 @@ create_flight_table = <<-SQL
 		id INTEGER PRIMARY KEY,
 		d_location VARCHAR(255),
 		a_location VARCHAR(255),
-		d_time VARCHAR(255),
-		a_time VARCHAR(255),
-		d_date DATE,
-		a_date DATE,
+		d_datetime TEXT,
+		a_datetime TEXT,
 		price INT,
 		route_id INT,
 		FOREIGN KEY(route_id) REFERENCES route_options(id)
 	)
 SQL
+# Create the tables
 db.execute(create_route_table)
 db.execute(create_flight_table)
-=begin
-# create manga table
-create_manga_table = <<-SQL
-	CREATE TABLE IF NOT EXISTS manga(
-		id INTEGER PRIMARY KEY,
-		title VARCHAR(255),
-		author VARCHAR(255),
-		volume INT,
-		complete BOOLEAN,
-		publisher_id INT,
-		FOREIGN KEY (publisher_id) REFERENCES publisher(id)
-	)
-SQL
 
-# create the tables
-db.execute(create_publisher_table)
-db.execute(create_manga_table)
+# Add to the routes
+def add_to_routes(db, description, preference)
+	db.execute("INSERT INTO route_options(description, preference) VALUES (?, ?)",[description, preference])
+end
+# Add to the flights
+def add_to_flights(db, d_location, a_location, d_datetime, a_datetime, price, route_id)
+	db.execute("INSERT INTO flights(d_location, a_location, d_datetime, a_datetime, price, route_id) VALUES (?,?,?,?,?,?)",[d_location, a_location, d_datetime, a_datetime, price, route_id])
+end
+#Test for adding to routes and flights
+p add_to_routes(db,"Directly from California to Austin", "true")
+p add_to_flights(db,"SFO","AUS","2017-05-30 19:00:00.0000","2017-05-31 00:29:00.0000",184,1)
+
+=begin
 
 # display all manga
 def display(db)
