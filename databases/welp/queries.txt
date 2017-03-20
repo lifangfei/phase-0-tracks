@@ -1,0 +1,16 @@
+Join (Include all info)
+SELECT * FROM reviews
+	JOIN businesses ON business_id = businesses.id
+	JOIN users ON user_id = users.id;
+
+
+Join (User's names, business, stars, comment)
+SELECT users.First_name, users.Last_name, businesses.name, reviews.stars, reviews.comment FROM reviews
+	JOIN businesses ON business_id=businesses.id
+	JOIN users ON user_id=users.id;
+
+Join (Data for just one business)
+SELECT users.First_name, users.Last_name, businesses.name, reviews.stars, reviews.comment FROM reviews
+	JOIN businesses ON business_id=businesses.id
+	JOIN users ON user_id=users.id
+	WHERE businesses.id=1;
