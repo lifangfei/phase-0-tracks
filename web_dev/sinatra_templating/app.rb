@@ -1,6 +1,7 @@
-# require gems
+ # require gems
 require 'sinatra'
 require 'sqlite3'
+require 'sinatra/reloader' if development?
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
